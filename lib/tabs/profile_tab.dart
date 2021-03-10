@@ -5,7 +5,7 @@ class ProfileTab extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('mike_tyler',
+        title: Text('aravindputhoor',
             style: TextStyle(
                 fontWeight: FontWeight.bold,
                 color: Colors.black,

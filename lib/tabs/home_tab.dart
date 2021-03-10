@@ -2,16 +2,45 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 // import 'package:image_picker/image_picker.dart';
 import 'package:instagram_ui_flutter/pages/messages_page.dart';
+import 'package:instagram_ui_flutter/providers/news_feed.dart';
 import 'package:instagram_ui_flutter/widgets/feed_post.dart';
 import 'package:instagram_ui_flutter/widgets/stories_widget.dart';
 
-class HomeTab extends StatelessWidget {
+import 'package:provider/provider.dart';
+
+class HomeTab extends StatefulWidget {
+  @override
+  _HomeTabState createState() => _HomeTabState();
+}
+
+class _HomeTabState extends State<HomeTab> {
   Future _launchCamera() async {
     // final _image = await ImagePicker().getImage(source: ImageSource.camera);
   }
 
+  var _isInIt = true;
+  var _isLoading = false;
+
+  @override
+  void didChangeDependencies() {
+    if (_isInIt) {
+      setState(() {
+        _isLoading = true;
+      });
+
+      Provider.of<NewsFeed>(context).fetchAndSetFeeds().then((_) {
+        setState(() {
+          _isLoading = false;
+        });
+      });
+    }
+    _isInIt = false;
+    super.didChangeDependencies();
+  }
+
   @override
   Widget build(BuildContext context) {
+    final feedProvider = Provider.of<NewsFeed>(context);
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.white,
@@ -46,43 +75,30 @@ class HomeTab extends StatelessWidget {
           )
         ],
       ),
-      body: SingleChildScrollView(
-        child: Column(
-          children: <Widget>[
-            StoriesWidget(),
-            FeedPost(
-                username: 'samwilson',
-                likes: 102,
-                time: '2 hours',
-                profilePicture: 'assets/Sam Wilson.jpg',
-                image: 'assets/story1.jpg'),
-            FeedPost(
-                username: 'eddisonalfred',
-                likes: 156,
-                time: '6 hours',
-                profilePicture: 'assets/eddison.jpg',
-                image: 'assets/story2.jpg'),
-            FeedPost(
-                username: 'adelle_klarke',
-                likes: 56,
-                time: '2 days',
-                profilePicture: 'assets/adelle.jpg',
-                image: 'assets/story3.jpg'),
-            FeedPost(
-                username: 'matthewsimpson',
-                likes: 224,
-                time: '1 week',
-                profilePicture: 'assets/mathew.jpg',
-                image: 'assets/story4.jpg'),
-            FeedPost(
-                username: 'ryanconnor',
-                likes: 112,
-                time: '2 weeks',
-                profilePicture: 'assets/ryan.jpg',
-                image: 'assets/story8.jpg'),
-          ],
-        ),
-      ),
+      body: _isLoading == true
+          ? Center(
+              child: CircularProgressIndicator(
+                  backgroundColor: Colors.grey, strokeWidth: 1.0))
+          : SingleChildScrollView(
+              child: Column(
+                children: <Widget>[
+                  StoriesWidget(),
+                  Column(
+                    children: List.generate(
+                      feedProvider.feeds.length,
+                      (index) => FeedPost(
+                        username: feedProvider.feeds[index].channelname,
+                        likes: 102,
+                        time: '2 hours',
+                        profilePicture: 'assets/user.jpg',
+                        image: feedProvider.feeds[index].thumbnail,
+                        title: feedProvider.feeds[index].title,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
     );
   }
 }
