@@ -18,7 +18,7 @@ class MyApp extends StatelessWidget {
         ),
       ],
       child: MaterialApp(
-        title: 'instagram',
+        title: 'Instagram App',
         debugShowCheckedModeBanner: false,
         home: HomePage(),
       ),

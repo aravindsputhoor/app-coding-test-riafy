@@ -1,12 +1,18 @@
 import 'package:flutter/material.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
+import 'package:instagram_ui_flutter/models/comments.dart';
 import 'package:instagram_ui_flutter/models/feed.dart';
 
 class NewsFeed with ChangeNotifier {
   List<Feed> _feeds = [];
+  List<Comment> _comments = [];
   List<Feed> get feeds {
     return [..._feeds];
+  }
+
+  List<Comment> get comments {
+    return [..._comments];
   }
 
   Future<void> fetchAndSetFeeds() async {
@@ -18,7 +24,7 @@ class NewsFeed with ChangeNotifier {
     if (extractedData == null) {
       return;
     }
-    print(extractedData[1]['id']);
+
     final List<Feed> loadedFeeds = [];
     var n = extractedData.length;
 
@@ -34,5 +40,28 @@ class NewsFeed with ChangeNotifier {
     }
     _feeds = loadedFeeds;
     // print(json.decode(response.body));
+  }
+
+  Future<void> fetchAndSetComments() async {
+    const url1 = 'https://cookbookrecipes.in/test.php';
+    final response1 = await http.get(url1);
+    final extractedData1 = json.decode(response1.body) as dynamic;
+
+    // print(json.decode(response1.body));
+
+    if (extractedData1 == null) {
+      return;
+    }
+    final List<Comment> loadedComments = [];
+    var n = extractedData1.length;
+
+    for (var i = 0; i < n; i++) {
+      loadedComments.add(
+        Comment(
+            username: extractedData1[i]['username'],
+            comments: extractedData1[i]['comments']),
+      );
+    }
+    _comments = loadedComments;
   }
 }

@@ -68,8 +68,8 @@ class _HomeTabState extends State<HomeTab> {
             padding: EdgeInsets.only(right: 20.0),
             child: GestureDetector(
                 onTap: () {
-                  Navigator.of(context).push(
-                      MaterialPageRoute(builder: (context) => MessagesPage()));
+                  // Navigator.of(context).push(
+                  //     MaterialPageRoute(builder: (context) => MessagesPage()));
                 },
                 child: Icon(FontAwesomeIcons.paperPlane, color: Colors.black)),
           )

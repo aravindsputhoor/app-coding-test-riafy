@@ -1,14 +1,11 @@
 import 'package:flutter/material.dart';
 
 class ActivityTile extends StatelessWidget {
-
   final String username;
   final String profilePicture;
+  final String comment;
 
-  ActivityTile({
-    this.username,
-    this.profilePicture
-  });
+  ActivityTile({this.username, this.profilePicture, this.comment});
 
   @override
   Widget build(BuildContext context) {
@@ -21,19 +18,21 @@ class ActivityTile extends StatelessWidget {
             radius: 30.0,
             backgroundImage: AssetImage(profilePicture),
           ),
-
           SizedBox(width: 10.0),
-
           Container(
-            width: MediaQuery.of(context).size.width/1.8,
+            width: MediaQuery.of(context).size.width / 1.8,
             child: Text.rich(
               TextSpan(
                 text: username,
-                style: TextStyle(color: Colors.black, fontSize: 15.0, fontWeight: FontWeight.bold),
+                style: TextStyle(
+                    color: Colors.black,
+                    fontSize: 15.0,
+                    fontWeight: FontWeight.bold),
                 children: <TextSpan>[
                   TextSpan(
-                    text: ' started following you',
-                    style: TextStyle(fontSize: 15.0, fontWeight: FontWeight.normal),
+                    text: '  $comment',
+                    style: TextStyle(
+                        fontSize: 15.0, fontWeight: FontWeight.normal),
                   ),
                 ],
               ),

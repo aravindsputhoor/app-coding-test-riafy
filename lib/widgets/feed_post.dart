@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:instagram_ui_flutter/pages/comments_page.dart';
 
 class FeedPost extends StatefulWidget {
   final String username;
@@ -113,7 +114,20 @@ class _FeedPostState extends State<FeedPost> {
         ),
         Padding(
           padding: EdgeInsets.symmetric(horizontal: 15.0),
-          child: Text(widget.title, style: TextStyle(fontSize: 16.0)),
+          child: Text(widget.title,
+              style: TextStyle(fontSize: 16.0, color: Colors.black)),
+        ),
+        Padding(
+          padding: EdgeInsets.symmetric(horizontal: 15.0),
+          child: GestureDetector(
+              onTap: () {
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (context) => CommentsPage(),
+                  ),
+                );
+              },
+              child: Text('View Comments', style: TextStyle(fontSize: 16.0))),
         ),
         Padding(
           padding: EdgeInsets.symmetric(horizontal: 15.0, vertical: 10.0),

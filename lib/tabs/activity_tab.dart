@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:instagram_ui_flutter/widgets/activity_tile.dart';
+// import 'package:instagram_ui_flutter/widgets/activity_tile.dart';
 import 'package:instagram_ui_flutter/widgets/activity_tile_alt.dart';
-import 'package:instagram_ui_flutter/widgets/suggestions_tile.dart';
+// import 'package:instagram_ui_flutter/widgets/suggestions_tile.dart';
 
 class ActivityTab extends StatelessWidget {
   @override
