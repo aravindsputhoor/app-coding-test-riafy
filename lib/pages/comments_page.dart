@@ -46,13 +46,14 @@ class _CommentsPageState extends State<CommentsPage> {
                   backgroundColor: Colors.grey, strokeWidth: 1.0))
           : ListView(
               children: List.generate(
-              feedProvider.comments.length,
-              (index) => ActivityTile(
-                username: feedProvider.comments[index].username,
-                profilePicture: 'assets/user.jpg',
-                comment: feedProvider.comments[index].comments,
+                feedProvider.comments.length,
+                (index) => ActivityTile(
+                  username: feedProvider.comments[index].username,
+                  profilePicture: 'assets/user.jpg',
+                  comment: feedProvider.comments[index].comments,
+                ),
               ),
-            )),
+            ),
     );
   }
 }

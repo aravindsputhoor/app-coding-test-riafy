@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:instagram_ui_flutter/pages/comments_page.dart';
+import 'package:instagram_ui_flutter/read_more_text.dart';
 
 class FeedPost extends StatefulWidget {
   final String username;
@@ -25,6 +26,24 @@ class FeedPost extends StatefulWidget {
 class _FeedPostState extends State<FeedPost> {
   bool isLiked = false;
   bool displayHeart = false;
+
+  String firstHalf;
+  String secondHalf;
+
+  bool flag = true;
+
+  @override
+  void initState() {
+    super.initState();
+
+    if (widget.title.length > 50) {
+      firstHalf = widget.title.substring(0, 50);
+      secondHalf = widget.title.substring(50, widget.title.length);
+    } else {
+      firstHalf = widget.title;
+      secondHalf = "";
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -114,8 +133,15 @@ class _FeedPostState extends State<FeedPost> {
         ),
         Padding(
           padding: EdgeInsets.symmetric(horizontal: 15.0),
-          child: Text(widget.title,
-              style: TextStyle(fontSize: 16.0, color: Colors.black)),
+          child: ReadMoreText(
+            widget.title,
+            trimLines: 1,
+            colorClickableText: Colors.blueGrey[300],
+            trimMode: TrimMode.Line,
+            trimCollapsedText: '...Read more',
+            trimExpandedText: ' Less',
+            style: TextStyle(fontSize: 16.0, color: Colors.black),
+          ),
         ),
         Padding(
           padding: EdgeInsets.symmetric(horizontal: 15.0),
@@ -127,7 +153,11 @@ class _FeedPostState extends State<FeedPost> {
                   ),
                 );
               },
-              child: Text('View Comments', style: TextStyle(fontSize: 16.0))),
+              child: Text('View Comments',
+                  style: TextStyle(
+                    fontSize: 14.0,
+                    color: Colors.grey,
+                  ))),
         ),
         Padding(
           padding: EdgeInsets.symmetric(horizontal: 15.0, vertical: 10.0),
