@@ -47,8 +47,7 @@ class _ActivityTabState extends State<ActivityTab> {
       ),
       body: newsFeed == null
           ? Center(
-              child: CircularProgressIndicator(
-                  backgroundColor: Colors.grey, strokeWidth: 1.0),
+              child: Text('No Bookmarks'),
             )
           : ListView.builder(
               shrinkWrap: true,

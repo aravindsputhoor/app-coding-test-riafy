@@ -5,6 +5,9 @@ import 'package:instagram_ui_flutter/read_more_text.dart';
 import 'package:instagram_ui_flutter/dbmanager.dart';
 import 'package:instagram_ui_flutter/models/news_feed.dart';
 
+import 'package:instagram_ui_flutter/dbmanager.dart';
+import 'package:provider/provider.dart';
+
 class FeedPost extends StatefulWidget {
   final String id;
   final String username;
@@ -32,6 +35,16 @@ class _FeedPostState extends State<FeedPost> {
   bool displayHeart = false;
   bool bookMark = false;
   final DbManager dbmanager = new DbManager();
+  var _isInIt = true;
+
+  // @override
+  // void didChangeDependencies() {
+  //   if (_isInIt) {
+
+  //   }
+  //   _isInIt = false;
+  //   super.didChangeDependencies();
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -41,12 +54,6 @@ class _FeedPostState extends State<FeedPost> {
       thumbnail: widget.image,
       title: widget.title,
     );
-
-    // dbmanager.updateNewsfeed(nf).then((value) {
-    //   setState(() {
-    //     bookMark = true;
-    //   });
-    // });
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
