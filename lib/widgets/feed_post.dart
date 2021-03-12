@@ -31,7 +31,7 @@ class _FeedPostState extends State<FeedPost> {
   bool isLiked = false;
   bool displayHeart = false;
   bool bookMark = false;
-  final DbStudentManager dbmanager = new DbStudentManager();
+  final DbManager dbmanager = new DbManager();
 
   @override
   Widget build(BuildContext context) {

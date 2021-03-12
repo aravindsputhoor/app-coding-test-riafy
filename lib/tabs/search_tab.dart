@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:instagram_ui_flutter/widgets/search_categories.dart';
+// import 'package:instagram_ui_flutter/widgets/search_categories.dart';
 
 class SearchTab extends StatelessWidget {
   @override

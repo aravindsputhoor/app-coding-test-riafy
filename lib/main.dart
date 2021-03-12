@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:instagram_ui_flutter/dbmanager.dart';
 import 'package:instagram_ui_flutter/pages/home_page.dart';
 import 'package:instagram_ui_flutter/providers/news_feed.dart';
 import 'package:provider/provider.dart';
@@ -15,6 +16,9 @@ class MyApp extends StatelessWidget {
       providers: [
         ChangeNotifierProvider(
           create: (ctx) => NewsFeed(),
+        ),
+        ChangeNotifierProvider(
+          create: (ctx) => DbManager(),
         ),
       ],
       child: MaterialApp(

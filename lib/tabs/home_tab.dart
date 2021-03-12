@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 // import 'package:image_picker/image_picker.dart';
-import 'package:instagram_ui_flutter/pages/messages_page.dart';
+// import 'package:instagram_ui_flutter/pages/messages_page.dart';
 import 'package:instagram_ui_flutter/providers/news_feed.dart';
 import 'package:instagram_ui_flutter/widgets/feed_post.dart';
 import 'package:instagram_ui_flutter/widgets/stories_widget.dart';

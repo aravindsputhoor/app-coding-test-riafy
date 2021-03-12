@@ -15,7 +15,7 @@ class Bookmark extends StatefulWidget {
 }
 
 class _BookmarkState extends State<Bookmark> {
-  final DbStudentManager dbmanager = new DbStudentManager();
+  final DbManager dbmanager = new DbManager();
 
   @override
   Widget build(BuildContext context) {

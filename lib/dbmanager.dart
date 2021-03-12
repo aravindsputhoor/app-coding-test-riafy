@@ -1,11 +1,16 @@
 import 'dart:async';
-import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:instagram_ui_flutter/models/news_feed.dart';
 
-class DbStudentManager {
+class DbManager with ChangeNotifier {
   Database _database;
+  List<Newsfeed> _postItems = [];
+
+  List<Newsfeed> get postItems {
+    return [..._postItems];
+  }
 
   Future openDb() async {
     if (_database == null) {
@@ -23,17 +28,35 @@ class DbStudentManager {
     return await _database.insert('newsfeed', newsfeed.toMap());
   }
 
-  Future<List<Newsfeed>> getNewsfeedList() async {
+  Future<void> getNewsfeedList() async {
     await openDb();
     final List<Map<String, dynamic>> maps = await _database.query('newsfeed');
-    return List.generate(maps.length, (i) {
-      return Newsfeed(
-        id: maps[i]['id'],
-        channelname: maps[i]['channelname'],
-        thumbnail: maps[i]['thumbnail'],
-        title: maps[i]['title'],
-      );
-    });
+
+    // return List.generate(maps.length, (i) {
+    //   return Newsfeed(
+    //     id: maps[i]['id'],
+    //     channelname: maps[i]['channelname'],
+    //     thumbnail: maps[i]['thumbnail'],
+    //     title: maps[i]['title'],
+    //   );
+    // });
+
+    final List<Newsfeed> loadedNewsfeed = [];
+
+    if (maps != null) {
+      //print(maps[1]['id']);
+      var n = maps.length;
+
+      for (var i = 0; i < n; i++) {
+        loadedNewsfeed.add(Newsfeed(
+            id: maps[i]['id'],
+            channelname: maps[i]['channelname'],
+            thumbnail: maps[i]['id'],
+            title: maps[i]['title']));
+      }
+      _postItems = loadedNewsfeed;
+      print(loadedNewsfeed);
+    }
   }
 
   Future<int> updateNewsfeed(Newsfeed newsfeed) async {
