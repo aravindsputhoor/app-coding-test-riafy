@@ -32,30 +32,19 @@ class DbManager with ChangeNotifier {
     await openDb();
     final List<Map<String, dynamic>> maps = await _database.query('newsfeed');
 
-    // return List.generate(maps.length, (i) {
-    //   return Newsfeed(
-    //     id: maps[i]['id'],
-    //     channelname: maps[i]['channelname'],
-    //     thumbnail: maps[i]['thumbnail'],
-    //     title: maps[i]['title'],
-    //   );
-    // });
-
     final List<Newsfeed> loadedNewsfeed = [];
 
     if (maps != null) {
-      //print(maps[1]['id']);
       var n = maps.length;
 
       for (var i = 0; i < n; i++) {
         loadedNewsfeed.add(Newsfeed(
             id: maps[i]['id'],
             channelname: maps[i]['channelname'],
-            thumbnail: maps[i]['id'],
+            thumbnail: maps[i]['thumbnail'],
             title: maps[i]['title']));
       }
       _postItems = loadedNewsfeed;
-      print(loadedNewsfeed);
     }
   }
 
@@ -68,5 +57,22 @@ class DbManager with ChangeNotifier {
   Future<void> deleteNewsfeed(String id) async {
     await openDb();
     await _database.delete('newsfeed', where: "id = ?", whereArgs: [id]);
+    // await openDb();
+    final List<Map<String, dynamic>> maps = await _database.query('newsfeed');
+
+    final List<Newsfeed> loadedNewsfeed1 = [];
+
+    if (maps != null) {
+      var n = maps.length;
+
+      for (var i = 0; i < n; i++) {
+        loadedNewsfeed1.add(Newsfeed(
+            id: maps[i]['id'],
+            channelname: maps[i]['channelname'],
+            thumbnail: maps[i]['thumbnail'],
+            title: maps[i]['title']));
+      }
+      _postItems = loadedNewsfeed1;
+    }
   }
 }
