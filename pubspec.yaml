@@ -34,12 +34,17 @@ dependencies:
   provider: ^4.3.2+3
   http: ^0.12.2
   readmore: ^1.0.1-nullsafety.3
+  sqflite:
+  path:
+  flutter_slidable:
+  
   
 
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
+
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec

@@ -2,8 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:instagram_ui_flutter/pages/comments_page.dart';
 import 'package:instagram_ui_flutter/read_more_text.dart';
+import 'package:instagram_ui_flutter/dbmanager.dart';
+import 'package:instagram_ui_flutter/models/news_feed.dart';
 
 class FeedPost extends StatefulWidget {
+  final String id;
   final String username;
   final int likes;
   final String time;
@@ -12,7 +15,8 @@ class FeedPost extends StatefulWidget {
   final String title;
 
   FeedPost(
-      {this.username,
+      {this.id,
+      this.username,
       this.likes,
       this.time,
       this.profilePicture,
@@ -26,27 +30,24 @@ class FeedPost extends StatefulWidget {
 class _FeedPostState extends State<FeedPost> {
   bool isLiked = false;
   bool displayHeart = false;
-
-  String firstHalf;
-  String secondHalf;
-
-  bool flag = true;
-
-  @override
-  void initState() {
-    super.initState();
-
-    if (widget.title.length > 50) {
-      firstHalf = widget.title.substring(0, 50);
-      secondHalf = widget.title.substring(50, widget.title.length);
-    } else {
-      firstHalf = widget.title;
-      secondHalf = "";
-    }
-  }
+  bool bookMark = false;
+  final DbStudentManager dbmanager = new DbStudentManager();
 
   @override
   Widget build(BuildContext context) {
+    Newsfeed nf = Newsfeed(
+      id: widget.id,
+      channelname: widget.username,
+      thumbnail: widget.image,
+      title: widget.title,
+    );
+
+    // dbmanager.updateNewsfeed(nf).then((value) {
+    //   setState(() {
+    //     bookMark = true;
+    //   });
+    // });
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
@@ -122,7 +123,39 @@ class _FeedPostState extends State<FeedPost> {
                   Icon(FontAwesomeIcons.paperPlane, size: 25.0),
                 ],
               ),
-              Icon(FontAwesomeIcons.bookmark, size: 25.0)
+              bookMark == false
+                  ? IconButton(
+                      icon: Icon(FontAwesomeIcons.bookmark, size: 25.0),
+                      onPressed: () {
+                        dbmanager.insertNewsfeed(nf).then((id) {
+                          final snackBar = SnackBar(
+                            content: Text('Post Bookmarked'),
+                            duration: Duration(seconds: 1),
+                          );
+                          ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                          print('NewsFeed Added to Db $id');
+                          setState(() {
+                            bookMark = true;
+                          });
+                        });
+                      },
+                    )
+                  : IconButton(
+                      icon: Icon(FontAwesomeIcons.solidBookmark),
+                      onPressed: () {
+                        dbmanager.deleteNewsfeed(widget.id).then((id) {
+                          final snackBar = SnackBar(
+                            content: Text('Bookmark Removed'),
+                            duration: Duration(seconds: 1),
+                          );
+                          ScaffoldMessenger.of(context).showSnackBar(snackBar);
+
+                          setState(() {
+                            bookMark = false;
+                          });
+                        });
+                      },
+                    ),
             ],
           ),
         ),

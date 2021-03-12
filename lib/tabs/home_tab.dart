@@ -87,6 +87,7 @@ class _HomeTabState extends State<HomeTab> {
                     children: List.generate(
                       feedProvider.feeds.length,
                       (index) => FeedPost(
+                        id: feedProvider.feeds[index].id,
                         username: feedProvider.feeds[index].channelname,
                         likes: 102,
                         time: '2 hours',
